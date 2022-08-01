@@ -4,29 +4,17 @@ import {Student} from './student.model';
 @model()
 export class Classroom extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: false,
   })
-  id: number;
+  id?: string;
 
   @property({
     type: 'string',
     required: true,
   })
   className: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  teacher: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  year: string;
 
   @hasMany(() => Student)
   students: Student[];
