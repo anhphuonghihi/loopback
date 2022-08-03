@@ -19,17 +19,20 @@ function* signUp({ signUpInput }: SignUpStart) {
   try {
     const response: AxiosResponse<Viewer> = yield call(
       axios.post,
-      "/api/auth/signup",
+      "http://[::1]:3000/signup",
       signUpInput
     );
     const { status, data } = response;
-    if (status === 201) {
+    if (status === 200) {
       yield put(signUpSuccess(data));
+      toast.success("Đăng kí thành công");
     }
   } catch (error: any) {
     yield put(
       signUpFailure((error.response as AxiosResponse<ErrorResponse>).data)
     );
+    const err: any = (error.response as AxiosResponse<ErrorResponse>).data;
+    toast.error(err.error.message);
   }
 }
 
@@ -49,20 +52,21 @@ function* getViewer() {
 
 function* signIn({ signInInput }: SignInStart) {
   try {
-    
     const { status, data }: AxiosResponse<Viewer> = yield call(
       axios.post,
-      "http://[::1]:3000/signup",
+      "http://[::1]:3000/users/refresh-login",
       signInInput
     );
     if (status === 200) {
       yield put(signInSuccess(data));
-      toast.success("Đăng kí thành công");
+      toast.success("Đăng nhập thành công");
     }
   } catch (error: any) {
     yield put(
       signInFailure((error.response as AxiosResponse<ErrorResponse>).data)
     );
+    const err: any = (error.response as AxiosResponse<ErrorResponse>).data;
+    err.error.message && toast.error(err.error.message);
   }
 }
 

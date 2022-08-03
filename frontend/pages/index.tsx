@@ -11,10 +11,15 @@ const Home: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter()
   const { viewer } = useSelector((state: AppState) => state.auth);
+  console.log("🚀 ~ file: index.tsx ~ line 14 ~ viewer", viewer)
   useEffect(() => {
     if (viewer === null || viewer === undefined) {
       router.push(routes.authSignin);
     }
+    if (viewer) {
+      router.push("/student");
+    }
+
   }, [router, viewer]);
   return (
     <div className={styles.container}>

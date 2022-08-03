@@ -163,7 +163,7 @@ export class UserController {
     const filter =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!filter.test(newUserRequest.email)) {
-      throw new HttpErrors.NotFound('must match format email');
+      throw new HttpErrors.BadRequest('must match format email');
     }
     if (newUserRequest.password.length < 8) {
       throw new HttpErrors.UnprocessableEntity(
@@ -176,7 +176,7 @@ export class UserController {
       },
     });
     if (foundUser) {
-      throw new HttpErrors.NotFound('Email is already registered');
+      throw new HttpErrors.BadRequest('Email is already registered');
     }
 
     const password = await hash(newUserRequest.password, await genSalt());

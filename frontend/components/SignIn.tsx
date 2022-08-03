@@ -46,13 +46,11 @@ const SignIn = (props: Props) => {
     if (email !== "" && password !== "") {
       dispatch(signInStart(signInInput))
     }
-    if (viewer.id) {
-      router.push(routes.authSignup);
+    if (viewer) {
+      router.push("/student");
     }
   };
-  useEffect(() => {
-    signInErrors && toast.error(signInErrors.message);
-  }, [signInErrors])
+
 
   return (
     <div>            <Typography variant="h4" component="h1" textAlign={'center'}>
