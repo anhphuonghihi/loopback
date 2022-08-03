@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
 
-const ProfilePage: NextPage = () => {
+const StudentPage: NextPage = () => {
   return (
     <Fragment>
       <Head>
@@ -12,4 +12,4 @@ const ProfilePage: NextPage = () => {
   );
 };
 
-export default ProfilePage;
+export default StudentPage;

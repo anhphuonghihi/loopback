@@ -4,6 +4,7 @@ import { useEffect, Fragment } from 'react';
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Head from 'next/head';
+import axios from "axios";
 import theme from '../theme';
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +13,19 @@ import { wrapper } from '../redux/store';
 import { Layout } from '../components/Layout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    setInterval(() => {
+      const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null
+      if (refreshToken) {
+        const ref = async () => {
+          const res = await axios.post("http://[::1]:3000/refresh",{refreshToken});
+          localStorage.setItem("accessToken", res.data.accessToken);
+        }
+        ref()
+      }
+
+    }, 21600*60*60);
+  }, []);
   console.log("🚀 ~ file: _app.tsx ~ line 13 ~ MyApp ~ pageProps", pageProps)
   console.log("🚀 ~ file: _app.tsx ~ line 13 ~ MyApp ~ Component", Component)
   return <Fragment>

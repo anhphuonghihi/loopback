@@ -46,10 +46,14 @@ const SignIn = (props: Props) => {
     if (email !== "" && password !== "") {
       dispatch(signInStart(signInInput))
     }
+  };
+  useEffect(() => {
     if (viewer) {
       router.push("/student");
+      localStorage.setItem("accessToken", viewer.accessToken);
+      localStorage.setItem("refreshToken", viewer.refreshToken);
     }
-  };
+  }, [router, viewer]);
 
 
   return (

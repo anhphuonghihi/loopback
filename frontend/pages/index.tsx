@@ -6,10 +6,14 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../redux/root-reducer';
+
 import { routes } from './routes';
 const Home: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter()
+  
+
+
   const { viewer } = useSelector((state: AppState) => state.auth);
   console.log("🚀 ~ file: index.tsx ~ line 14 ~ viewer", viewer)
   useEffect(() => {
@@ -19,7 +23,6 @@ const Home: NextPage = () => {
     if (viewer) {
       router.push("/student");
     }
-
   }, [router, viewer]);
   return (
     <div className={styles.container}>

@@ -7,11 +7,9 @@ import {
   signUpSuccess,
   getViewerSuccess,
   signInSuccess,
-  signOutSuccess,
   signUpFailure,
   getVieweFailure,
   signInFailure,
-  signOutFailure,
 } from "./actions";
 
 import { toast } from "react-toastify";
@@ -70,23 +68,6 @@ function* signIn({ signInInput }: SignInStart) {
   }
 }
 
-function* signOut() {
-  try {
-    const { status, data }: AxiosResponse<boolean> = yield call(
-      axios.post,
-      "/api/auth/signout",
-      null
-    );
-    if (status === 200) {
-      yield put(signOutSuccess(data));
-      //   yield call(logout);
-    }
-  } catch (error: any) {
-    yield put(
-      signOutFailure((error.response as AxiosResponse<ErrorResponse>).data)
-    );
-  }
-}
 
 function* onSignUpStart() {
   yield takeLatest(AuthActionTypes.signUpStart, signUp);
@@ -97,15 +78,11 @@ function* onGetViewerStart() {
 function* onSignInStart() {
   yield takeLatest(AuthActionTypes.signInStart, signIn);
 }
-function* onSignOutStart() {
-  yield takeLatest(AuthActionTypes.signOutStart, signOut);
-}
 
 export function* authSagas(): Generator {
   yield all([
     call(onSignUpStart),
     call(onGetViewerStart),
     call(onSignInStart),
-    call(onSignOutStart),
   ]);
 }
