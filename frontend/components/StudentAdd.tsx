@@ -18,6 +18,7 @@ type Props = {}
 import { useRouter } from 'next/router'
 const StudentAdd = (props: Props) => {
     const { loading } = useSelector((state: AppState) => state.student);
+    const { editstudent } = useSelector((state: AppState) => state.student);
     const dispatch = useDispatch();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -28,37 +29,48 @@ const StudentAdd = (props: Props) => {
     const [genderErrText, setGenderErrText] = useState("");
     const [classroomIdErrText, setClassroomErrText] = useState("");
     const router = useRouter()
+    const [edit, setEdit] = useState("")
+    useEffect(() => {
+        setEdit(editstudent.id)
+        setFirstName(editstudent.firstName)
+        setLastName(editstudent.lastName)
+        setGender(editstudent.gender)
+        setClassroom(editstudent.classroomId)
+    }, [editstudent])
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         setFirstNameErrText("");
         setLastNameErrText("");
         setGenderErrText("")
         setClassroomErrText("")
-        const data: any = new FormData(e.target);
 
         let err = false;
 
-        if (firstName === "") {
+        if (firstName === ""||firstName === undefined) {
             err = true;
             setFirstNameErrText("Please fill this field");
         }
-        if (lastName === "") {
+        if (lastName === ""||lastName === undefined) {
             err = true;
             setLastNameErrText("Please fill this field");
         }
-        if (gender === "") {
+        if (gender === ""||gender === undefined) {
             err = true;
             setGenderErrText("Please fill this field");
         }
-        if (classroomId === "") {
+        if (classroomId === ""||classroomId === undefined) {
             err = true;
             setClassroomErrText("Please fill this field");
         }
         if (err) return;
         const studentInput: any = { firstName, lastName, gender, classroomId };
         if (firstName !== "" && lastName !== "" && gender !== "" && classroomId !== "") {
-            dispatch(addStudentStart(studentInput))
-            router.push("student");
+            if (edit) {
+                dispatch(addStudentStart(studentInput))
+            } else {
+                dispatch(addStudentStart(studentInput))
+            }
         }
     };
 

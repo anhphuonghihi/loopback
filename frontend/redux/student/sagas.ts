@@ -7,6 +7,7 @@ import {
   STUDENT_LIST_ADD,
   STUDENT_LIST_DELETE,
   STUDENT_LIST_GET,
+  STUDENT_LIST_EDIT
 } from "./action-types";
 
 import {
@@ -113,7 +114,30 @@ function* getEditStudent({ id }: any) {
     }
   } catch (error: any) {
     yield put(
-      getEditStudentFailure((error.response as AxiosResponse<ErrorResponse>).data)
+      getEditStudentFailure(
+        (error.response as AxiosResponse<ErrorResponse>).data
+      )
+    );
+  }
+}
+function* editStudent(studentEdit: any) {
+  try {
+    const accessToken: any =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+    const { status, data }: AxiosResponse<{ student: Student | null }> =
+      yield call(axios.get, `http://[::1]:3000/students/${studentEdit.id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    if (status === 200) {
+      yield put(getEditStudentSuccess(data));
+    }
+  } catch (error: any) {
+    yield put(
+      getEditStudentFailure(
+        (error.response as AxiosResponse<ErrorResponse>).data
+      )
     );
   }
 }
@@ -129,11 +153,15 @@ function* onDeleteStudent() {
 function* onGetEditStudent() {
   yield takeLatest(STUDENT_LIST_GET, getEditStudent);
 }
+function* onEditStudent() {
+  yield takeLatest(STUDENT_LIST_EDIT, editStudent);
+}
 export function* studentSagas(): Generator {
   yield all([
     call(onGetStudent),
     call(onAddStudent),
     call(onDeleteStudent),
     call(onGetEditStudent),
+    call(onEditStudent),
   ]);
 }

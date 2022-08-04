@@ -16,10 +16,16 @@ import {
   STUDENT_LIST_DELETE_FAILED,
 } from "./action-types";
 
+
 import {
   STUDENT_LIST_GET_SUCCESS,
   STUDENT_LIST_GET,
   STUDENT_LIST_GET_FAILED,
+} from "./action-types";
+import {
+  STUDENT_LIST_EDIT_SUCCESS,
+  STUDENT_LIST_EDIT,
+  STUDENT_LIST_EDIT_FAILED,
 } from "./action-types";
 import { Student, ErrorResponse } from "./interfaces";
 export const getStudentStart = (): any => ({
@@ -74,5 +80,19 @@ export const getEditStudentSuccess = (student: any): any => ({
 });
 export const getEditStudentFailure = (errorResponse: ErrorResponse): any => ({
   type: STUDENT_LIST_GET_FAILED,
+  errorResponse,
+});
+
+export const editStudentStart = (studentInput: any): any => ({
+  type: STUDENT_LIST_EDIT,
+  studentInput,
+});
+
+export const editStudentSuccess = (student: any): any => ({
+  type: STUDENT_LIST_EDIT_SUCCESS,
+  student,
+});
+export const editStudentFailure = (errorResponse: ErrorResponse): any => ({
+  type: STUDENT_LIST_EDIT_FAILED,
   errorResponse,
 });

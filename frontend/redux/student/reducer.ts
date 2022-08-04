@@ -9,7 +9,11 @@ import {
   STUDENT_LIST_ADD,
   STUDENT_LIST_ADD_FAILED,
 } from "./action-types";
-
+import {
+  STUDENT_LIST_EDIT_SUCCESS,
+  STUDENT_LIST_EDIT,
+  STUDENT_LIST_EDIT_FAILED,
+} from "./action-types";
 import {
   STUDENT_LIST_DELETE_SUCCESS,
   STUDENT_LIST_DELETE,
@@ -25,6 +29,7 @@ import {
 export const initialState = {
   student: [],
   loading: false,
+  editstudent: [],
 };
 
 export const studentReducer = (state = initialState, action: any): any => {
@@ -98,6 +103,26 @@ export const studentReducer = (state = initialState, action: any): any => {
         loading: false,
       };
     case STUDENT_LIST_GET_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.error || [],
+      };
+    case STUDENT_LIST_EDIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case STUDENT_LIST_EDIT_SUCCESS:
+      // const newStudent = state.student.filter((item) =>
+      //   item._id === action.payload._id ? action.payload.todo : item
+      // );
+      return {
+        ...state,
+        // student: [...newStudent],
+        loading: false,
+      };
+    case STUDENT_LIST_EDIT_FAILED:
       return {
         ...state,
         loading: false,
