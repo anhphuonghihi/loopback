@@ -1,5 +1,4 @@
 export interface ErrorResponse {
-  [x: string]: ToastContent<unknown>;
   error: []
 }
 
