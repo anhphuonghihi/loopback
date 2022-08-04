@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 type Props = {}
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudentStart } from '../redux/student/actions';
+import { getStudentStart, deleteStudentStart } from '../redux/student/actions';
 import { AppState } from '../redux/root-reducer';
 import Link from 'next/link'
+import Button from '@mui/material/Button';
+// import DeleteIcon from '@mui/icons-material/Delete';
 import { TableContainer, Paper, TableHead, Table, TableRow, TableCell, TableBody } from '@mui/material';
 const Student = (props: Props) => {
 
@@ -12,8 +14,8 @@ const Student = (props: Props) => {
   useEffect(() => {
     dispatch(getStudentStart());
   }, [dispatch])
-  const deleteStudent = () => {
-
+  const deleteStudent = (id: any) => {
+    dispatch(deleteStudentStart(id));
   }
   return (
     <TableContainer component={Paper} elevation={6}>
@@ -52,7 +54,7 @@ const Student = (props: Props) => {
           {student.map((students: any, index: number) => (
             <TableRow key={index}>
               <TableCell >
-                {index+1}
+                {index + 1}
               </TableCell>
               <TableCell >
                 {students.firstName}
@@ -67,7 +69,10 @@ const Student = (props: Props) => {
                 {students.classroomId}
               </TableCell>
               <TableCell >
-                <button onClick={() => deleteStudent()}>Delete</button>
+
+                <Button variant="outlined" onClick={() => deleteStudent(students.id)}>
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}

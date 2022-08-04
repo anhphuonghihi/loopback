@@ -158,9 +158,10 @@ export class StudentsController {
     return this.getListUserWithRelationClass(postData.userIds);
   }
 
-
-
   async getListUserWithRelationClass(userIds: string[]) {
-    return await this.studentRepository.find({where: { id: { inq: userIds}},include: ['classroom'],});
+    return await this.studentRepository.find({
+      where: {id: {inq: userIds}},
+      include: ['classroom'],
+    });
   }
 }

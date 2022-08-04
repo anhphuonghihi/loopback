@@ -2,13 +2,19 @@ import { takeLatest, call, put, all } from "redux-saga/effects";
 import axios, { AxiosResponse } from "axios";
 import { Student } from "./interfaces";
 import { ErrorResponse } from "./interfaces";
-import { STUDENT_LIST, STUDENT_LIST_ADD } from "./action-types";
 import {
-  getStudentStart,
+  STUDENT_LIST,
+  STUDENT_LIST_ADD,
+  STUDENT_LIST_DELETE,
+} from "./action-types";
+
+import {
   getStudentSuccess,
   getStudentFailure,
   addStudentSuccess,
   addStudentFailure,
+  deleteStudentSuccess,
+  deleteStudentFailure,
 } from "./actions";
 
 import { toast } from "react-toastify";
@@ -65,13 +71,39 @@ function* addStudent({ studentInput }: any) {
     err.error.message && toast.error(err.error.message);
   }
 }
+
+function* deleteStudent({ id }: any) {
+  try {
+    const accessToken: any =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+    const { status, data }: AxiosResponse<{ student: Student | null }> =
+      yield call(axios.delete, `http://[::1]:3000/students/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+    if (status === 204) {
+      yield put(deleteStudentSuccess(data));
+      toast.success("Xóa sinh viên thành công");
+    }
+  } catch (error: any) {
+    yield put(
+      deleteStudentFailure(
+        (error.response as AxiosResponse<ErrorResponse>).data
+      )
+    );
+  }
+}
 function* onGetStudent() {
   yield takeLatest(STUDENT_LIST, getStudent);
 }
 function* onAddStudent() {
   yield takeLatest(STUDENT_LIST_ADD, addStudent);
 }
-
+function* onDeleteStudent() {
+  yield takeLatest(STUDENT_LIST_DELETE, deleteStudent);
+}
 export function* studentSagas(): Generator {
-  yield all([call(onGetStudent), call(onAddStudent)]);
+  yield all([call(onGetStudent), call(onAddStudent), call(onDeleteStudent)]);
 }

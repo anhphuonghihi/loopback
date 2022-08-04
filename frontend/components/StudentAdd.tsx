@@ -7,6 +7,10 @@ import TextField from '@mui/material/TextField';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/root-reducer';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
 import { addStudentStart } from '../redux/student/actions';
 type Props = {}
@@ -52,8 +56,8 @@ const StudentAdd = (props: Props) => {
         const studentInput: any = { firstName, lastName, gender, classroomId };
         console.log("🚀 ~ file: StudentAdd.tsx ~ line 44 ~ handleSubmit ~ studentInput", studentInput)
         if (firstName !== "" && lastName !== "" && gender !== "" && classroomId !== "") {
-              dispatch(addStudentStart(studentInput))
-              router.push("student");
+            dispatch(addStudentStart(studentInput))
+            router.push("student");
         }
     };
 
@@ -99,18 +103,21 @@ const StudentAdd = (props: Props) => {
                         error={genderErrText !== ""}
                         helperText={genderErrText}
                     />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
+                    <InputLabel id="demo-simple-select-label">Lớp</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
                         type="classroomId"
                         id="classroomId"
-                        label="ClassroomId"
                         name="classroomId"
-                        disabled={loading}
-                        error={classroomIdErrText !== ""}
-                        helperText={classroomIdErrText}
-                    />
+                        required
+                        fullWidth
+                        variant="outlined"
+                        sx={{ mb: 2 }}
+                    >
+                        <MenuItem value="Lớp 10">Lớp 10</MenuItem>
+                        <MenuItem value="Lớp 11">Lớp 11</MenuItem>
+                        <MenuItem value="Lớp 12">Lớp 12</MenuItem>
+                    </Select>
                     <LoadingButton
                         variant="outlined"
                         fullWidth
