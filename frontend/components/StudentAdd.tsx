@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@mui/material";
-import { addStudentStart } from '../redux/student/actions';
+import { addStudentStart,editStudentStart } from '../redux/student/actions';
 type Props = {}
 import { useRouter } from 'next/router'
 const StudentAdd = (props: Props) => {
@@ -64,13 +64,18 @@ const StudentAdd = (props: Props) => {
             setClassroomErrText("Please fill this field");
         }
         if (err) return;
-        const studentInput: any = { firstName, lastName, gender, classroomId };
+     
         if (firstName !== "" && lastName !== "" && gender !== "" && classroomId !== "") {
             if (edit) {
-                dispatch(addStudentStart(studentInput))
+                const studentInput: any = { firstName, lastName, gender, classroomId ,edit};
+                console.log("🚀 ~ file: StudentAdd.tsx ~ line 71 ~ handleSubmit ~ studentInput", studentInput)
+                dispatch(editStudentStart(studentInput))
+                
             } else {
+                const studentInput: any = { firstName, lastName, gender, classroomId };
                 dispatch(addStudentStart(studentInput))
             }
+            router.push("student")
         }
     };
 

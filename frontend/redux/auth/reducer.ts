@@ -2,6 +2,7 @@ import { AuthAction, AuthActionTypes } from "./action-types";
 
 export const initialState = {
   viewer: undefined,
+  viewers:undefined,
   signUpErrors: [],
   getViewerErrors: [],
   signInErrors: [],
@@ -48,7 +49,7 @@ export const authReducer = (state = initialState, action: AuthAction): any => {
       case AuthActionTypes.getViewerSuccess:
       return {
         ...state,
-        viewer: action.viewer,
+        viewers: action.viewer,
       };
 
     case AuthActionTypes.signInSuccess:

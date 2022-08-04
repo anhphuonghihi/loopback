@@ -119,6 +119,7 @@ export const studentReducer = (state = initialState, action: any): any => {
       // );
       return {
         ...state,
+        editstudent: [],
         // student: [...newStudent],
         loading: false,
       };
@@ -126,6 +127,7 @@ export const studentReducer = (state = initialState, action: any): any => {
       return {
         ...state,
         loading: false,
+        editstudent: [],
         error: action.error || [],
       };
     default:

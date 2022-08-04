@@ -8,7 +8,7 @@ import { AppState } from '../redux/root-reducer';
 const ProfilePage: NextPage = () => {
 
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
-  const { viewer } = useSelector((state: AppState) => state.auth);
+  const { viewers } = useSelector((state: AppState) => state.auth);
   return (
     <Fragment>
       <Head>
@@ -27,7 +27,7 @@ const ProfilePage: NextPage = () => {
             <TableCell component="th" scope="row">
               ID
             </TableCell>
-            <TableCell align="right">{viewer.id}</TableCell>
+            <TableCell align="right">{viewers && viewers.id}</TableCell>
           </TableBody>
         </Table>
       </TableContainer>}
