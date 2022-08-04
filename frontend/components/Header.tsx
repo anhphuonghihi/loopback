@@ -41,6 +41,11 @@ const Header = (props: Props) => {
               <Button variant="contained">Student</Button>
             </a>
           </Link>
+            <Link href="/profile">
+              <a>
+                <Button variant="contained">Profile</Button>
+              </a>
+            </Link>
             <Button variant="contained" onClick={onLogout}
             >Logout</Button></>}
         </Stack>

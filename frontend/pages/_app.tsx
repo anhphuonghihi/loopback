@@ -26,8 +26,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     }, 21600*60*60);
   }, []);
-  console.log("🚀 ~ file: _app.tsx ~ line 13 ~ MyApp ~ pageProps", pageProps)
-  console.log("🚀 ~ file: _app.tsx ~ line 13 ~ MyApp ~ Component", Component)
   return <Fragment>
     <Head>
       <meta name="theme-color" content={theme.palette.primary.main} />

@@ -62,11 +62,9 @@ const CredentialsSchema: SchemaObject = {
   properties: {
     email: {
       type: 'string',
-      format: 'email',
     },
     password: {
       type: 'string',
-      minLength: 8,
     },
   },
 };
@@ -115,13 +113,23 @@ export class UserController {
   async login(
     @requestBody(CredentialsRequestBody) credentials: Credentials,
   ): Promise<{token: string}> {
+    const filter =
+      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!filter.test(credentials.email)) {
+      throw new HttpErrors.BadRequest('must match format email');
+    }
+    if (credentials.password.length < 8) {
+      throw new HttpErrors.UnprocessableEntity(
+        'Password length should be greater than 8',
+      );
+    }
     const foundUser = await this.userRepository.findOne({
       where: {
         email: credentials.email,
       },
     });
     if (!foundUser) {
-      throw new HttpErrors.NotFound('user not found');
+      throw new HttpErrors.NotFound('User not found');
     }
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
@@ -167,7 +175,7 @@ export class UserController {
     }
     if (newUserRequest.password.length < 8) {
       throw new HttpErrors.UnprocessableEntity(
-        'password length should be greater than 8',
+        'Password length should be greater than 8',
       );
     }
     const foundUser = await this.userRepository.findOne({
@@ -214,6 +222,24 @@ export class UserController {
   async refreshLogin(
     @requestBody(CredentialsRequestBody) credentials: Credentials,
   ): Promise<TokenObject> {
+    const filter =
+      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!filter.test(credentials.email)) {
+      throw new HttpErrors.BadRequest('must match format email');
+    }
+    if (credentials.password.length < 8) {
+      throw new HttpErrors.UnprocessableEntity(
+        'Password length should be greater than 8',
+      );
+    }
+    const foundUser = await this.userRepository.findOne({
+      where: {
+        email: credentials.email,
+      },
+    });
+    if (!foundUser) {
+      throw new HttpErrors.NotFound('User not found');
+    }
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
     // convert a User object into a UserProfile object (reduced set of properties)
