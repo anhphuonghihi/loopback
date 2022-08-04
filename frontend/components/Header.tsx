@@ -10,14 +10,17 @@ import { AppState } from '../redux/root-reducer';
 import { signOutSuccess } from '../redux/auth/actions';
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router'
 const Header = (props: Props) => {
   const [auth, setAuth] = useState(false)
   const dispatch = useDispatch();
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
   const { viewer } = useSelector((state: AppState) => state.auth);
+  const router = useRouter()
   const onLogout = () => {
     window.localStorage.clear();
     dispatch(signOutSuccess(true));
+    router.push("/auth/signin");
   }
   useEffect(() => {
     if (viewer || accessToken) {

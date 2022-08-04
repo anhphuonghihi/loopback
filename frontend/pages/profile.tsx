@@ -6,13 +6,15 @@ import { useSelector } from 'react-redux';
 import { TableContainer, Paper, TableHead, Table, TableRow, TableCell, TableBody } from '@mui/material';
 import { AppState } from '../redux/root-reducer';
 const ProfilePage: NextPage = () => {
+
+  const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
   const { viewer } = useSelector((state: AppState) => state.auth);
   return (
     <Fragment>
       <Head>
         <title>Profile</title>
       </Head>
-      <TableContainer component={Paper} elevation={6}>
+      {accessToken && <TableContainer component={Paper} elevation={6}>
         <Table>
           <TableHead>
             <TableRow>
@@ -26,9 +28,9 @@ const ProfilePage: NextPage = () => {
               ID
             </TableCell>
             <TableCell align="right">{viewer.id}</TableCell>
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableBody>
+        </Table>
+      </TableContainer>}
     </Fragment >
   );
 };

@@ -3,12 +3,14 @@ import Head from 'next/head';
 import { NextPage } from 'next';
 import StudentAdd from '../components/StudentAdd';
 const studentAddPage: NextPage = () => {
+
+  const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
   return (
     <Fragment>
       <Head>
         <title>Student Add</title>
       </Head>
-      <StudentAdd />
+      {accessToken && <StudentAdd />}
     </Fragment>
   );
 };

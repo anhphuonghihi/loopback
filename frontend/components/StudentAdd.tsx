@@ -19,6 +19,10 @@ import { useRouter } from 'next/router'
 const StudentAdd = (props: Props) => {
     const { loading } = useSelector((state: AppState) => state.student);
     const dispatch = useDispatch();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [gender, setGender] = useState("");
+    const [classroomId, setClassroom] = useState("");
     const [firstNameErrText, setFirstNameErrText] = useState("");
     const [lastNameErrText, setLastNameErrText] = useState("");
     const [genderErrText, setGenderErrText] = useState("");
@@ -31,10 +35,7 @@ const StudentAdd = (props: Props) => {
         setGenderErrText("")
         setClassroomErrText("")
         const data: any = new FormData(e.target);
-        const firstName = data.get("firstName").trim();
-        const lastName = data.get("lastName").trim();
-        const gender = data.get("gender").trim();
-        const classroomId = data.get("classroomId").trim();
+
         let err = false;
 
         if (firstName === "") {
@@ -69,6 +70,8 @@ const StudentAdd = (props: Props) => {
             <AuthContainer>
                 <Box component="form" onSubmit={(e: any) => handleSubmit(e)} noValidate>
                     <TextField
+                        value={firstName}
+                        onChange={(e: any) => setFirstName(e.target.value)}
                         margin="normal"
                         required
                         fullWidth
@@ -80,6 +83,8 @@ const StudentAdd = (props: Props) => {
                         helperText={firstNameErrText}
                     />
                     <TextField
+                        value={lastName}
+                        onChange={(e: any) => setLastName(e.target.value)}
                         margin="normal"
                         required
                         fullWidth
@@ -92,6 +97,8 @@ const StudentAdd = (props: Props) => {
                         helperText={lastNameErrText}
                     />
                     <TextField
+                        value={gender}
+                        onChange={(e: any) => setGender(e.target.value)}
                         margin="normal"
                         required
                         fullWidth
@@ -105,6 +112,8 @@ const StudentAdd = (props: Props) => {
                     />
                     <InputLabel id="demo-simple-select-label">Lớp</InputLabel>
                     <Select
+                        value={classroomId}
+                        onChange={(e: any) => setClassroom(e.target.value)}
                         labelId="demo-simple-select-label"
                         type="classroomId"
                         id="classroomId"

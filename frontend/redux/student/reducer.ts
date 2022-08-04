@@ -32,6 +32,7 @@ export const studentReducer = (state = initialState, action: any): any => {
     case STUDENT_LIST:
       return {
         ...state,
+        editstudent: [],
         loading: true,
       };
     case STUDENT_LIST_SUCCESS:
@@ -49,6 +50,7 @@ export const studentReducer = (state = initialState, action: any): any => {
     case STUDENT_LIST_ADD:
       return {
         ...state,
+        editstudent: [],
         loading: true,
       };
     case STUDENT_LIST_ADD_SUCCESS:
@@ -84,23 +86,23 @@ export const studentReducer = (state = initialState, action: any): any => {
         loading: false,
         error: action.error || [],
       };
-      case STUDENT_LIST_GET:
-        return {
-          ...state,
-          loading: true,
-        };
-      case STUDENT_LIST_GET_SUCCESS:
-        return {
-          ...state,
-          editstudent: action.student,
-          loading: false,
-        };
-      case STUDENT_LIST_GET_FAILED:
-        return {
-          ...state,
-          loading: false,
-          error: action.error || [],
-        };
+    case STUDENT_LIST_GET:
+      return {
+        ...state,
+        loading: true,
+      };
+    case STUDENT_LIST_GET_SUCCESS:
+      return {
+        ...state,
+        editstudent: action.student,
+        loading: false,
+      };
+    case STUDENT_LIST_GET_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.error || [],
+      };
     default:
       return state;
   }

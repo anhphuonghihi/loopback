@@ -20,7 +20,7 @@ const Student = (props: Props) => {
   }
   const viewEditStudent =(id: any) => {
     dispatch(getEditStudentStart(id));
-    router.push("/student/edit");
+    router.push("/studentAdd");
   }
   return (
     <TableContainer component={Paper} elevation={6}>
