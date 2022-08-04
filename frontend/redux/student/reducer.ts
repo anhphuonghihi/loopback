@@ -57,19 +57,17 @@ export const studentReducer = (state = initialState, action: any): any => {
         error: action.error || [],
       };
     case STUDENT_LIST_DELETE:
-      return {
-        ...state,
-        loading: true,
-      };
-    case STUDENT_LIST_DELETE_SUCCESS:
       const newStudent = state.student.filter(
-        (student: any) => 
-        console.log("🚀 ~ file: reducer.ts ~ line 67 ~ studentReducer ~ student.id", student.id)
+        (student: any) => student.id !== action.id
       );
-      console.log("🚀 ~ file: reducer.ts ~ line 68 ~ studentReducer ~ newStudent", newStudent)
       return {
         ...state,
         student: [...newStudent],
+        loading: true,
+      };
+    case STUDENT_LIST_DELETE_SUCCESS:
+      return {
+        ...state,
         loading: false,
       };
 
