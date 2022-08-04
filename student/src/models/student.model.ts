@@ -14,7 +14,7 @@ export class Student extends Entity {
     type: 'string',
     required: true,
   })
-  fristName: string;
+  firstName: string;
 
   @property({
     type: 'string',

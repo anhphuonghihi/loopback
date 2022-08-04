@@ -23,13 +23,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null
       if (refreshToken) {
         const ref = async () => {
-          const res = await axios.post("http://[::1]:3000/refresh",{refreshToken});
+          const res = await axios.post("http://[::1]:3000/refresh", { refreshToken });
           localStorage.setItem("accessToken", res.data.accessToken);
         }
         ref()
       }
 
-    }, 21600*60*60);
+    }, 21600 * 60 * 60);
   }, []);
   const { viewer } = useSelector((state: AppState) => state.auth);
   useEffect(() => {
