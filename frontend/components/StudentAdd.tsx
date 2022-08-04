@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { routes } from '../pages/routes';
 import TextField from '@mui/material/TextField';
 import { LoadingButton } from '@mui/lab';
+import FormHelperText from '@mui/material/FormHelperText';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../redux/root-reducer';
 import InputLabel from '@mui/material/InputLabel';
@@ -54,7 +55,6 @@ const StudentAdd = (props: Props) => {
         }
         if (err) return;
         const studentInput: any = { firstName, lastName, gender, classroomId };
-        console.log("🚀 ~ file: StudentAdd.tsx ~ line 44 ~ handleSubmit ~ studentInput", studentInput)
         if (firstName !== "" && lastName !== "" && gender !== "" && classroomId !== "") {
             dispatch(addStudentStart(studentInput))
             router.push("student");
@@ -112,13 +112,15 @@ const StudentAdd = (props: Props) => {
                         required
                         fullWidth
                         variant="outlined"
-                        sx={{ mb: 2 }}
+
                     >
                         <MenuItem value="Lớp 10">Lớp 10</MenuItem>
                         <MenuItem value="Lớp 11">Lớp 11</MenuItem>
                         <MenuItem value="Lớp 12">Lớp 12</MenuItem>
                     </Select>
+                    <FormHelperText>{classroomIdErrText && classroomIdErrText}</FormHelperText>
                     <LoadingButton
+                        sx={{ mt: 2 }}
                         variant="outlined"
                         fullWidth
                         color="success"

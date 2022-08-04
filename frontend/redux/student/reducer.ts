@@ -15,6 +15,13 @@ import {
   STUDENT_LIST_DELETE,
   STUDENT_LIST_DELETE_FAILED,
 } from "./action-types";
+
+import {
+  STUDENT_LIST_GET_SUCCESS,
+  STUDENT_LIST_GET,
+  STUDENT_LIST_GET_FAILED,
+} from "./action-types";
+
 export const initialState = {
   student: [],
   loading: false,
@@ -77,6 +84,23 @@ export const studentReducer = (state = initialState, action: any): any => {
         loading: false,
         error: action.error || [],
       };
+      case STUDENT_LIST_GET:
+        return {
+          ...state,
+          loading: true,
+        };
+      case STUDENT_LIST_GET_SUCCESS:
+        return {
+          ...state,
+          editstudent: action.student,
+          loading: false,
+        };
+      case STUDENT_LIST_GET_FAILED:
+        return {
+          ...state,
+          loading: false,
+          error: action.error || [],
+        };
     default:
       return state;
   }

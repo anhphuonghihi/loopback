@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 type Props = {}
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudentStart, deleteStudentStart } from '../redux/student/actions';
+import { getStudentStart, deleteStudentStart,getEditStudentStart } from '../redux/student/actions';
 import { AppState } from '../redux/root-reducer';
 import Link from 'next/link'
 import Button from '@mui/material/Button';
+import { useRouter } from 'next/router';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import { TableContainer, Paper, TableHead, Table, TableRow, TableCell, TableBody } from '@mui/material';
 const Student = (props: Props) => {
-
+  const router = useRouter()
   const { student } = useSelector((state: AppState) => state.student);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,6 +17,10 @@ const Student = (props: Props) => {
   }, [dispatch])
   const deleteStudent = (id: any) => {
     dispatch(deleteStudentStart(id));
+  }
+  const viewEditStudent =(id: any) => {
+    dispatch(getEditStudentStart(id));
+    router.push("/student/edit");
   }
   return (
     <TableContainer component={Paper} elevation={6}>
@@ -72,6 +77,9 @@ const Student = (props: Props) => {
 
                 <Button variant="outlined" onClick={() => deleteStudent(students.id)}>
                   Delete
+                </Button>
+                <Button variant="outlined" onClick={() => viewEditStudent(students.id)}>
+                  Edit
                 </Button>
               </TableCell>
             </TableRow>
