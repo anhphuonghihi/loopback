@@ -44,8 +44,8 @@ export const authReducer = (state = initialState, action: AuthAction): any => {
         viewer: action.viewer,
         loading: false,
       };
-
-    case AuthActionTypes.getViewerSuccess:
+      
+      case AuthActionTypes.getViewerSuccess:
       return {
         ...state,
         viewer: action.viewer,

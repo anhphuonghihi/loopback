@@ -11,8 +11,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { wrapper } from '../redux/store';
 import { Layout } from '../components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { getViewerStart } from '../redux/auth/actions';
+
+import { AppState } from '../redux/root-reducer';
 function MyApp({ Component, pageProps }: AppProps) {
+  const dispatch = useDispatch();
   useEffect(() => {
     setInterval(() => {
       const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null
@@ -26,6 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     }, 21600*60*60);
   }, []);
+  const { viewer } = useSelector((state: AppState) => state.auth);
+  useEffect(() => {
+    if (viewer === undefined) {
+      dispatch(getViewerStart());
+    }
+  }, [dispatch, viewer]);
   return <Fragment>
     <Head>
       <meta name="theme-color" content={theme.palette.primary.main} />

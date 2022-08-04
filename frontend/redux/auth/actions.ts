@@ -32,11 +32,7 @@ export const signUpFailure = (errorResponse: ErrorResponse): SignUpFailure => ({
 export const getViewerStart = (): GetViewerStart => ({
   type: AuthActionTypes.getViewerStart,
 });
-export const getViewerSuccess = ({
-  viewer,
-}: {
-  viewer: Viewer | null;
-}): GetViewerSuccess => ({
+export const getViewerSuccess = (viewer:any): any => ({
   type: AuthActionTypes.getViewerSuccess,
   viewer,
 });

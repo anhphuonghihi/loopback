@@ -281,14 +281,21 @@ export class UserController {
   @get('/me', {
     responses: {
       '200': {
-        description: '',
-        schema: {
-          type: 'string',
+        description: 'Return current user',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'string',
+            },
+          },
         },
       },
     },
   })
-  async whoAmI(): Promise<string> {
-    return this.user[securityId];
+  async whoAmI(
+    @inject(SecurityBindings.USER)
+    currentUserProfile: UserProfile,
+  ): Promise<any> {
+    return currentUserProfile;
   }
 }

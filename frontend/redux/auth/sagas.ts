@@ -13,6 +13,7 @@ import {
 } from "./actions";
 
 import { toast } from "react-toastify";
+
 function* signUp({ signUpInput }: SignUpStart) {
   try {
     const response: AxiosResponse<Viewer> = yield call(
@@ -36,8 +37,14 @@ function* signUp({ signUpInput }: SignUpStart) {
 
 function* getViewer() {
   try {
+    const accessToken: any =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
     const { status, data }: AxiosResponse<{ viewer: Viewer | null }> =
-      yield call(axios.get, "/api/auth/viewer");
+      yield call(axios.get, "http://[::1]:3000/me", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
     if (status === 200) {
       yield put(getViewerSuccess(data));
     }
@@ -68,7 +75,6 @@ function* signIn({ signInInput }: SignInStart) {
   }
 }
 
-
 function* onSignUpStart() {
   yield takeLatest(AuthActionTypes.signUpStart, signUp);
 }
@@ -80,9 +86,5 @@ function* onSignInStart() {
 }
 
 export function* authSagas(): Generator {
-  yield all([
-    call(onSignUpStart),
-    call(onGetViewerStart),
-    call(onSignInStart),
-  ]);
+  yield all([call(onSignUpStart), call(onGetViewerStart), call(onSignInStart)]);
 }
